@@ -1,3 +1,3 @@
 export default function post() {
-  return;
+  return <></>;
 }

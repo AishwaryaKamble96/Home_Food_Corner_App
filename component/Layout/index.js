@@ -1,10 +1,10 @@
 import TitleBar from "../TitleBar";
 
-export default function Layout({ child }) {
+export default function Layout({ children }) {
   return (
     <>
       <TitleBar />
-      {child}
+      <main>{children}</main>
     </>
   );
 }
