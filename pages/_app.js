@@ -1,11 +1,16 @@
-import "@/styles/globals.css";
+//import "@/styles/globals.css";
 import GlobalStyle from "../component/GlobalStyles";
+import Footer from "../component/Navigation";
+import Layout from "../component/Layout";
 
 export default function App({ Component, pageProps }) {
   return (
     <>
       <GlobalStyle />
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+      <Footer />
     </>
   );
 }
