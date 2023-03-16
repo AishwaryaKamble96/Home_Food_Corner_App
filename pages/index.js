@@ -8,11 +8,14 @@ import Post from "../component/Post";
 
 export default function Home() {
   const [postList, setPostList] = useState([]);
+  const [wholeList, setWholeList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetch("/api");
       const dataResponse = await data.json();
+
+      setWholeList(dataResponse);
       setPostList(dataResponse);
     };
     fetchData().catch(console.error);
@@ -22,32 +25,22 @@ export default function Home() {
 
   function handleSearch(event) {
     event.preventDefault();
-    if (postList.length <= 1) {
-      console.log("ëmty");
-      setPostList(postList);
-    }
-    ///setPostList(postList);
+    console.log("call.", event.target.value);
     setSearchText(event.target.value);
+    //setSearchText(event.target);
 
-    console.log("called", searchText);
-    // const searchResult = postList.filter((post) => {
-    //   const postName = post.name.toLowerCase();
-    //   return postName.includes(searchText);
-    // });
-    const searchResult = postList.map((post) => {
+    //console.log("list", wholeList);
+    const searchResult = wholeList.filter((post) => {
       const postName = post.name.toLowerCase();
       return postName.includes(searchText);
     });
-
+    console.log("called", searchText);
     setPostList(searchResult);
-    console.log(searchResult);
-    // if (!searchResult) {
-    //   return <h2>Sorry!! Search for something else.</h2>;
-    // }
+    console.log(searchText, searchResult);
   }
 
   async function handleReload(event) {
-    // const form = event.target;
+    const form = event.target;
     // form.reset();
     const data = await fetch("/api/posts");
     const postData = await data.json();
@@ -57,18 +50,17 @@ export default function Home() {
   return (
     <>
       <AppGrid>
-        {/* ///onSubmit={handleSearch} */}
         <form>
-          <SearchBar
-            typeof="search"
+          <Search
+            type={"search"}
             id="searchText"
             name="searchText"
+            value={searchText}
             placeholder="Enter your favourite food name"
-            onChange={handleSearch}
-          ></SearchBar>
-
-          <button onClick={handleReload}>Refresh</button>
+            onInput={handleSearch}
+          ></Search>
         </form>
+        <button onClick={handleReload}>Refresh</button>
         <PostList>
           {postList.map((post) => {
             return <Post postData={post}></Post>;
@@ -89,8 +81,7 @@ const PostList = styled.ul`
   gap: 20px;
   align-items: center;
 `;
-
-const SearchBar = styled.input`
+const Search = styled.input`
   width: 80%;
   border-radius: 1%;
   align-self: center;
