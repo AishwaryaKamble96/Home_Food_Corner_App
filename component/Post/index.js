@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Post({ postData }) {
   return (
     <>
-      <PostWrapper key={postData._id}>
+      <PostWrapper>
         <ImageWrapper>
           <Image
             src={postData.image_url}
@@ -34,10 +34,10 @@ const PostWrapper = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  /* border-radius: 7px; */
+
   padding: 20px;
   background-color: rgb(251, 252, 252);
-  /* box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px; */
+
   position: relative;
   width: 100%;
 `;

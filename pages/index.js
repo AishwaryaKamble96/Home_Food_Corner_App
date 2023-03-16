@@ -1,14 +1,11 @@
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Post from "../component/Post";
 
-//const inter = Inter({ subsets: ["latin"] });
-
 export default function Home() {
   const [postList, setPostList] = useState([]);
   const [wholeList, setWholeList] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,49 +18,40 @@ export default function Home() {
     fetchData().catch(console.error);
   }, []);
 
-  const [searchText, setSearchText] = useState("");
-
   function handleSearch(event) {
-    event.preventDefault();
-    console.log("call.", event.target.value);
-    setSearchText(event.target.value);
-    //setSearchText(event.target);
-
-    //console.log("list", wholeList);
+    const word = event.target.value;
+    setSearchText(word);
     const searchResult = wholeList.filter((post) => {
       const postName = post.name.toLowerCase();
-      return postName.includes(searchText);
+      return postName.includes(word);
     });
-    console.log("called", searchText);
     setPostList(searchResult);
-    console.log(searchText, searchResult);
   }
 
-  async function handleReload(event) {
-    const form = event.target;
-    // form.reset();
-    const data = await fetch("/api/posts");
-    const postData = await data.json();
-    setPostList(postData);
-  }
+  // async function handleReload(event) {
+  //   const form = event.target;
+  //   const data = await fetch("/api/posts");
+  //   const postData = await data.json();
+  //   setPostList(postData);
+  // }
 
   return (
     <>
       <AppGrid>
-        <form>
+        <SearchBox>
           <Search
             type={"search"}
-            id="searchText"
-            name="searchText"
+            id="searchtext"
+            name="searchtext"
             value={searchText}
             placeholder="Enter your favourite food name"
-            onInput={handleSearch}
+            onChange={handleSearch}
           ></Search>
-        </form>
-        <button onClick={handleReload}>Refresh</button>
+        </SearchBox>
+        {/* <button onClick={handleReload}>Refresh</button> */}
         <PostList>
           {postList.map((post) => {
-            return <Post postData={post}></Post>;
+            return <Post postData={post} key={post._id}></Post>;
           })}
         </PostList>
       </AppGrid>
@@ -82,8 +70,14 @@ const PostList = styled.ul`
   align-items: center;
 `;
 const Search = styled.input`
-  width: 80%;
+  width: 70%;
+  height: 30px;
   border-radius: 1%;
-  align-self: center;
+
   background-color: rgb(253, 254, 254);
+`;
+
+const SearchBox = styled.form`
+  display: flex;
+  justify-content: center;
 `;
