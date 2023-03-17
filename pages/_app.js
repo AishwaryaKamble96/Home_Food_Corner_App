@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps }) {
   const [postList, setPostList] = useState([]);
+  const [wishListPosts, setWishListPosts] = useState([]);
 
   // Fetched post list from Post Collection
   useEffect(() => {
@@ -18,11 +19,13 @@ export default function App({ Component, pageProps }) {
     fetchData().catch(console.error);
   }, []);
 
-  const wishListPosts = postList.map((post) => {
-    return { id: post._id, isEnd: false };
-  });
+  setWishListPosts(
+    postList.map((post) => {
+      return { id: post._id, isWished: false };
+    })
+  );
 
-  console.log("array of ishlist", wishListPosts);
+  console.log("array of wishlist", wishListPosts);
   return (
     <>
       <GlobalStyle />
