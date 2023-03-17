@@ -2,12 +2,15 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Post from "../component/Post";
 
-export default function Home({ postList }) {
+export default function Home({ postList, wishList, onToggleWished }) {
   const [filteredPostList, setFilteredPostList] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  // set filteredPostList with postList value
-  //postList is a list of all posts fetched from db
+  console.log("wishist:", wishList);
+  // const [wishListPosts, setWishListPosts] = useLocalStorageState(
+  //   "wishListPosts",
+  //   { defaultValue: "" }
+  // );
   useEffect(() => {
     setFilteredPostList(postList);
   }, [postList]);
@@ -38,7 +41,14 @@ export default function Home({ postList }) {
 
         <PostList>
           {filteredPostList.map((post) => {
-            return <Post postData={post} key={post._id}></Post>;
+            return (
+              <Post
+                postData={post}
+                key={post._id}
+                wishList={wishList}
+                onToggleWished={onToggleWished}
+              ></Post>
+            );
           })}
         </PostList>
       </AppGrid>

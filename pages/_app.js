@@ -3,10 +3,16 @@ import GlobalStyle from "../component/GlobalStyles";
 import Footer from "../component/Navigation";
 import Layout from "../component/Layout";
 import { useState, useEffect } from "react";
+import useLocalStorageState from "use-local-storage-state";
+
+import { set } from "mongoose";
 
 export default function App({ Component, pageProps }) {
   const [postList, setPostList] = useState([]);
-  const [wishListPosts, setWishListPosts] = useState([]);
+  const [wishListPosts, setWishListPosts] = useLocalStorageState(
+    "wishListPosts",
+    { defaultValue: [] }
+  );
 
   // Fetched post list from Post Collection
   useEffect(() => {
@@ -19,18 +25,33 @@ export default function App({ Component, pageProps }) {
     fetchData().catch(console.error);
   }, []);
 
-  setWishListPosts(
-    postList.map((post) => {
-      return { id: post._id, isWished: false };
-    })
-  );
+  function handleWishedPost(id) {
+    if (wishListPosts.length === 0) {
+      console.log("empty", wishListPosts);
+      setWishListPosts([{ id: id, isWished: true }]);
+    } else {
+      console.log("not empty");
+      setWishListPosts(
+        wishListPosts.map((post, index) => {
+          index.id == id
+            ? { ...index, isWished: !wishListPosts.isWished }
+            : post;
+        })
+      );
+    }
+    console.log("wishListPosts", wishListPosts);
+  }
 
-  console.log("array of wishlist", wishListPosts);
   return (
     <>
       <GlobalStyle />
       <Layout>
-        <Component postList={postList} {...pageProps} />
+        <Component
+          postList={postList}
+          wishList={wishListPosts}
+          onToggleWished={handleWishedPost}
+          {...pageProps}
+        />
       </Layout>
       <Footer />
     </>
