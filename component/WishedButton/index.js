@@ -3,12 +3,10 @@ import { FcLikePlaceholder as LightRedHeart } from "react-icons/fc";
 import { FcLike as RedHeart } from "react-icons/fc";
 
 export default function WishedButton({ postID, onToggleWished, isWished }) {
-  console.log("is wished from button", isWished, postID);
   return (
     <HeartButton
       aria-label="favorite"
       onClick={() => {
-        console.log(postID);
         onToggleWished(postID);
       }}
     >

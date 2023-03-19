@@ -1,14 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
-
 import WishedButton from "../WishedButton";
-import { useState } from "react";
 
 export default function Post({ postData, wishList, onToggleWished }) {
-  console.log("wishist from Post:", wishList);
-
-  //const [isWished, setIsWished] = useState(false);
   let isWished = false;
+
+  // Get set isWished status variable for the respective post
   wishList.find((post) => {
     if (post.id == postData._id) isWished = post.isWished;
   });

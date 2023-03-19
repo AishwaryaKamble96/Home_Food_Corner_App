@@ -6,15 +6,12 @@ export default function Home({ postList, wishList, onToggleWished }) {
   const [filteredPostList, setFilteredPostList] = useState([]);
   const [searchText, setSearchText] = useState("");
 
-  console.log("wishist:", wishList);
-  // const [wishListPosts, setWishListPosts] = useLocalStorageState(
-  //   "wishListPosts",
-  //   { defaultValue: "" }
-  // );
+  // set updated postlist
   useEffect(() => {
     setFilteredPostList(postList);
   }, [postList]);
 
+  // To handle search filter for specific word
   function handleSearch(event) {
     const word = event.target.value;
     setSearchText(word);

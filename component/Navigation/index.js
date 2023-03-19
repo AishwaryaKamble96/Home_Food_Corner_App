@@ -8,6 +8,14 @@ export default function Navigation() {
       <Link href="/">
         <Image src={"/img/home.png"} alt="Home" width={50} height={50} />
       </Link>
+      <Link href="/wishlistpage">
+        <Image
+          src={"/img/wishlist_icon.png"}
+          alt="Wishlist"
+          width={50}
+          height={50}
+        />
+      </Link>
     </LinkNavigation>
   );
 }
