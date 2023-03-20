@@ -1,12 +1,12 @@
 import Image from "next/image";
 import styled from "styled-components";
+import WishedButton from "../WishedButton";
 
-export default function PostDetails({ postDetails, onToggleWished }) {
-  console.log("details:", postDetails);
+export default function PostDetails({ postDetails, onToggleWished, wishList }) {
+  // destructure the postDetails object
   const {
     _id,
     name,
-
     image_url,
     content,
     price,
@@ -16,19 +16,25 @@ export default function PostDetails({ postDetails, onToggleWished }) {
     shipping_type,
     tag,
   } = postDetails;
-  //const { name, location, shipping_type, tag } = postDetails;
-  //console.log("details2:", name, location, shipping_type, tag);
+
   return (
     <>
-      <div>
-        <Image
-          src={image_url}
-          alt={name}
-          height={280}
-          width={350}
-          priority
-        ></Image>
-        <Details>
+      <DetailsWrapper>
+        <ImageWrapper>
+          <Image
+            src={image_url}
+            alt={name}
+            height={280}
+            width={450}
+            priority
+          ></Image>
+          <WishedButton
+            postID={_id}
+            wishList={wishList}
+            onToggleWished={onToggleWished}
+          />
+        </ImageWrapper>
+        <DetailedInfo>
           <dt>Name: {name}</dt>
           <dt>Food Content :{content}</dt>
           <dt>Price: €{price}</dt>
@@ -37,14 +43,26 @@ export default function PostDetails({ postDetails, onToggleWished }) {
           <dt>Loation:{location}</dt>
           <dt>shipping Type:{shipping_type}</dt>
           <dt>Food Type:{tag}</dt>
-        </Details>
-      </div>
+        </DetailedInfo>
+      </DetailsWrapper>
     </>
   );
 }
 
-const Details = styled.section`
+const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+const DetailsWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  padding: 10px;
+  flex-direction: column;
+`;
+
+const DetailedInfo = styled.section`
   margin: 0 30px 50px 40px;
-  //margin-bottom: 40px;
+  color: rebeccapurple;
   padding: 40px;
 `;

@@ -2,23 +2,17 @@ import styled from "styled-components";
 import Image from "next/image";
 import WishedButton from "../WishedButton";
 import { useRouter } from "next/router";
-import { RouteHandlerManager } from "next/dist/server/future/route-handler-managers/route-handler-manager";
 
+// Below function will use to display each content
 export default function Post({ postData, wishList, onToggleWished }) {
-  let isWished = false;
   const router = useRouter();
 
   //Route to the respective post details by food name
   function handleDetailsClick() {
-    const foodName = postData.name;
-    const detailsPageUrl = `/${foodName}`;
+    const foodId = postData._id;
+    const detailsPageUrl = `/${foodId}`;
     router.push(detailsPageUrl);
   }
-
-  // Get set isWished status variable for the respective post
-  wishList.find((post) => {
-    if (post.id == postData._id) isWished = post.isWished;
-  });
 
   return (
     <>
@@ -45,7 +39,7 @@ export default function Post({ postData, wishList, onToggleWished }) {
         </InfoWrapper>
         <WishedButton
           postID={postData._id}
-          isWished={isWished}
+          wishList={wishList}
           onToggleWished={onToggleWished}
         />
       </PostWrapper>
