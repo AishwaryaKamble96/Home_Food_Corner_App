@@ -2,38 +2,25 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 import Post from "../component/Post";
 
-export default function Home() {
-  const [postList, setPostList] = useState([]);
-  const [wholeList, setWholeList] = useState([]);
+export default function Home({ postList, wishList, onToggleWished }) {
+  const [filteredPostList, setFilteredPostList] = useState([]);
   const [searchText, setSearchText] = useState("");
 
+  // set updated postlist
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch("/api");
-      const dataResponse = await data.json();
+    setFilteredPostList(postList);
+  }, [postList]);
 
-      setWholeList(dataResponse);
-      setPostList(dataResponse);
-    };
-    fetchData().catch(console.error);
-  }, []);
-
+  // To handle search filter for specific word
   function handleSearch(event) {
     const word = event.target.value;
     setSearchText(word);
-    const searchResult = wholeList.filter((post) => {
+    const searchResult = postList.filter((post) => {
       const postName = post.name.toLowerCase();
       return postName.includes(word);
     });
-    setPostList(searchResult);
+    setFilteredPostList(searchResult);
   }
-
-  // async function handleReload(event) {
-  //   const form = event.target;
-  //   const data = await fetch("/api/posts");
-  //   const postData = await data.json();
-  //   setPostList(postData);
-  // }
 
   return (
     <>
@@ -48,10 +35,17 @@ export default function Home() {
             onChange={handleSearch}
           ></Search>
         </SearchBox>
-        {/* <button onClick={handleReload}>Refresh</button> */}
+
         <PostList>
-          {postList.map((post) => {
-            return <Post postData={post} key={post._id}></Post>;
+          {filteredPostList.map((post) => {
+            return (
+              <Post
+                postData={post}
+                key={post._id}
+                wishList={wishList}
+                onToggleWished={onToggleWished}
+              ></Post>
+            );
           })}
         </PostList>
       </AppGrid>

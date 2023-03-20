@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import Image from "next/image";
+import WishedButton from "../WishedButton";
 
-export default function Post({ postData }) {
+export default function Post({ postData, wishList, onToggleWished }) {
+  let isWished = false;
+
+  // Get set isWished status variable for the respective post
+  wishList.find((post) => {
+    if (post.id == postData._id) isWished = post.isWished;
+  });
+
   return (
     <>
       <PostWrapper>
@@ -21,6 +29,11 @@ export default function Post({ postData }) {
           <dd>Available on :{postData.date_of_availability}</dd>
           <dd>Location: {postData.location} </dd>
         </InfoWrapper>
+        <WishedButton
+          postID={postData._id}
+          isWished={isWished}
+          onToggleWished={onToggleWished}
+        />
       </PostWrapper>
     </>
   );
@@ -40,6 +53,14 @@ const PostWrapper = styled.li`
 
   position: relative;
   width: 100%;
+`;
+const HeartButton = styled.button`
+  appearance: none;
+  background: none;
+  border: none;
+  position: relative;
+  top: 10px;
+  height: 10px;
 `;
 
 const InfoWrapper = styled.div``;
