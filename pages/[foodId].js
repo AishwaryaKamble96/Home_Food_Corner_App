@@ -11,6 +11,7 @@ export default function FoodPostDetails({
   const foodPostId = router.query.foodId;
   //Get Post details by its Id
   const postDetails = postList.find((post) => post._id === foodPostId);
+  if (!postDetails) return null;
 
   return (
     <PostDetails
