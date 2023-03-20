@@ -56,6 +56,8 @@ export default function Home({ postList, wishList, onToggleWished }) {
 const AppGrid = styled.section`
   display: flex;
   flex-direction: column;
+  margin-top: 40px;
+  margin-bottom: 40px;
 `;
 const PostList = styled.ul`
   display: flex;
