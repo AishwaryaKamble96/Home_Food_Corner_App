@@ -21,10 +21,10 @@ export default function Navigation() {
 }
 
 const LinkNavigation = styled.nav`
-  display: flex;
   position: fixed;
-  bottom: 0px;
+  bottom: 0;
   width: 100%;
+  display: flex;
   justify-content: space-evenly;
   margin: 5px;
   padding: 10px;

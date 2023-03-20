@@ -1,20 +1,25 @@
 import styled from "styled-components";
 import Image from "next/image";
 import WishedButton from "../WishedButton";
+import { useRouter } from "next/router";
 
+// Below function will use to display each content
 export default function Post({ postData, wishList, onToggleWished }) {
-  let isWished = false;
+  const router = useRouter();
 
-  // Get set isWished status variable for the respective post
-  wishList.find((post) => {
-    if (post.id == postData._id) isWished = post.isWished;
-  });
+  //Route to the respective post details by food name
+  function handleDetailsClick() {
+    const foodId = postData._id;
+    const detailsPageUrl = `/${foodId}`;
+    router.push(detailsPageUrl);
+  }
 
   return (
     <>
       <PostWrapper>
         <ImageWrapper>
           <Image
+            onClick={handleDetailsClick}
             src={postData.image_url}
             alt={postData.name}
             width={170}
@@ -28,10 +33,13 @@ export default function Post({ postData, wishList, onToggleWished }) {
           <dd>Tag: {postData.tag} </dd>
           <dd>Available on :{postData.date_of_availability}</dd>
           <dd>Location: {postData.location} </dd>
+          <DetailsButton onClick={handleDetailsClick}>
+            More details..
+          </DetailsButton>
         </InfoWrapper>
         <WishedButton
           postID={postData._id}
-          isWished={isWished}
+          wishList={wishList}
           onToggleWished={onToggleWished}
         />
       </PostWrapper>
@@ -64,3 +72,8 @@ const HeartButton = styled.button`
 `;
 
 const InfoWrapper = styled.div``;
+const DetailsButton = styled.button`
+  position: relative;
+  top: 30px;
+  height: 20px;
+`;
