@@ -7,6 +7,7 @@ export default function FoodPostDetails({
   onToggleWished,
   wishList,
 }) {
+  //use router to routing to specific id
   const router = useRouter();
   const foodPostId = router.query.foodId;
   //Get Post details by its Id
