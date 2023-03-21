@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Profile({ userData }) {
+export default function Profile({ userData, userPostList }) {
   const { _id, username, email_id, contactno, fullname } = userData;
 
   return (
@@ -20,7 +20,17 @@ export default function Profile({ userData }) {
         </Info>
 
         <PostList>
-          <li>hi</li>
+          <h4>Your Posts:</h4>
+          {!userPostList.length ? (
+            <ListItem>No post </ListItem>
+          ) : (
+            userPostList.map((post) => (
+              <ListItem key={post._id}>
+                {post.name}
+                <button>Remove</button>
+              </ListItem>
+            ))
+          )}
         </PostList>
         <AddPostButton>Add Post</AddPostButton>
       </ProfileGrid>
@@ -35,7 +45,7 @@ const ProfileTitle = styled.div`
 
 const ProfileGrid = styled.section`
   display: flex;
-  margin: 30px 30px 40px 30px;
+  margin: 30px 30px 100px 30px;
   justify-content: space-evenly;
   flex-direction: column;
 `;
@@ -51,11 +61,25 @@ const Info = styled.div`
 
 const AddPostButton = styled.button`
   background-color: white;
-  border-radius: 15%;
-  box-shadow: 2px 5px;
+  padding: 5px;
+  border-radius: 5%;
+  width: 100px;
   border: 1px solid;
 `;
 
 const PostList = styled.ul`
+  display: flex;
+  flex-direction: column;
   list-style: none;
+  gap: 5px;
+`;
+const ListItem = styled.li`
+  padding: 5px;
+  background-color: white;
+  align-items: center;
+  border: 1px solid;
+  border-radius: 20px;
+  justify-content: space-evenly;
+  display: flex;
+  gap: 5px;
 `;
