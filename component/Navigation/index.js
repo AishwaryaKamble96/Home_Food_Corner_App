@@ -9,12 +9,11 @@ export default function Navigation() {
         <Image src={"/img/home.png"} alt="Home" width={50} height={50} />
       </Link>
       <Link href="/wishlistpage">
-        <Image
-          src={"/img/wishlist_icon.png"}
-          alt="Wishlist"
-          width={50}
-          height={50}
-        />
+        <Image src={"/img/heart.png"} alt="Wishlist" width={50} height={50} />
+      </Link>
+
+      <Link href="/profile">
+        <Image src={"/img/user.png"} alt="Wishlist" width={50} height={50} />
       </Link>
     </LinkNavigation>
   );
