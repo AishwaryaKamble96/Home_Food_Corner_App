@@ -1,43 +1,48 @@
 import { useState } from "react";
 import styled from "styled-components";
 import PostForm from "../PostForm";
+import UpdatePost from "../UpdatePost";
 
 export default function Profile({ userData, userPostList }) {
-  const { _id, username, email_id, contactno, location } = userData;
+  //const { _id, username, email_id, contactno, location } = userData;
   const [addPostEnabled, setAddPostEnabled] = useState(false);
+  const [isEditEnabled, SetIsEditEnabled] = useState(false);
+  const [editablePostId, setEditablePostId] = useState();
 
   async function onDelete(id) {
     const response = await fetch(`/api/posts/${id}`, { method: "DELETE" });
     if (response.ok) {
       await response.json();
-      console.log("delete is", id);
     } else {
       console.error(`Error: ${response.status}`);
     }
   }
 
-  console.log("value", addPostEnabled);
+  function handleUpdate(id) {
+    SetIsEditEnabled(true);
+    setEditablePostId(id);
+  }
 
   return (
     <>
       {addPostEnabled ? (
         <PostForm
-          userId={_id}
-          location={location}
+          userId={userData._id}
+          location={userData.location}
           addPostEnabled={setAddPostEnabled}
         />
       ) : (
         <ProfileGrid>
-          <ProfileTitle>Hello, {username}</ProfileTitle>
+          <ProfileTitle>Hello, {userData.username}</ProfileTitle>
           <Info>
             <dt>
-              Email Id : <span>{email_id}</span>
+              Email Id : <span>{userData.email_id}</span>
             </dt>
             <dt>
-              Contact No : <span>{contactno}</span>
+              Contact No : <span>{userData.contactno}</span>
             </dt>
             <dt>
-              Location : <span>{location}</span>
+              Location : <span>{userData.location}</span>
             </dt>
           </Info>
 
@@ -50,7 +55,7 @@ export default function Profile({ userData, userPostList }) {
                 <ListItem key={post._id}>
                   {post.name}
                   <button onClick={() => onDelete(post._id)}>Remove</button>
-                  {/* <button onClick={()=>onDelete(post.id)}>Udate</button> */}
+                  <button onClick={() => handleUpdate(post._id)}>Update</button>
                 </ListItem>
               ))
             )}
@@ -62,6 +67,12 @@ export default function Profile({ userData, userPostList }) {
           >
             Add Post
           </AddPostButton>
+          {isEditEnabled && (
+            <UpdatePost
+              postId={editablePostId}
+              isEditEnabled={SetIsEditEnabled}
+            ></UpdatePost>
+          )}
         </ProfileGrid>
       )}
     </>

@@ -1,4 +1,3 @@
-import { useRouter } from "next/router";
 import styled from "styled-components";
 import { StyledButton } from "../Button/Button.styled";
 
@@ -7,7 +6,6 @@ export default function PostForm({ userId, location, addPostEnabled }) {
   const postDate = new Date().toISOString().substring(0, 10);
 
   async function handleSubmit(event) {
-    event.preventDefault();
     const form = new FormData(event.target);
     const formData = Object.fromEntries(form);
 
@@ -57,7 +55,7 @@ export default function PostForm({ userId, location, addPostEnabled }) {
           required
         ></textarea>
         <StyledLabel htmlFor="date_of_availability">
-          Availability Date{" "}
+          Availability Date
         </StyledLabel>
         <StyledInput
           type="date"
