@@ -8,7 +8,7 @@ const userSchema = new Schema({
 
   ///email_id: { type: String }, // used correctTld for TLD validation
   email_id: { type: mongoose.SchemaTypes.Email, correctTld: true }, // used correctTld for TLD validation
-  fullname: { type: String, required: true },
+  location: { type: String, required: true },
 });
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 

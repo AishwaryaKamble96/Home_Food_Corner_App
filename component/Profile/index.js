@@ -1,39 +1,69 @@
+import { useState } from "react";
 import styled from "styled-components";
+import PostForm from "../PostForm";
 
 export default function Profile({ userData, userPostList }) {
-  const { _id, username, email_id, contactno, fullname } = userData;
+  const { _id, username, email_id, contactno, location } = userData;
+  const [addPostEnabled, setAddPostEnabled] = useState(false);
+
+  async function onDelete(id) {
+    const response = await fetch(`/api/posts/${id}`, { method: "DELETE" });
+    if (response.ok) {
+      await response.json();
+      console.log("delete is", id);
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
+  }
+
+  console.log("value", addPostEnabled);
 
   return (
     <>
-      <ProfileGrid>
-        <ProfileTitle>Hello, {fullname}</ProfileTitle>
-        <Info>
-          <dt>
-            User Name : <span>{username}</span>
-          </dt>
-          <dt>
-            Email Id : <span>{email_id}</span>
-          </dt>
-          <dt>
-            Contact No : <span>{contactno}</span>
-          </dt>
-        </Info>
+      {addPostEnabled ? (
+        <PostForm
+          userId={_id}
+          location={location}
+          addPostEnabled={setAddPostEnabled}
+        />
+      ) : (
+        <ProfileGrid>
+          <ProfileTitle>Hello, {username}</ProfileTitle>
+          <Info>
+            <dt>
+              Email Id : <span>{email_id}</span>
+            </dt>
+            <dt>
+              Contact No : <span>{contactno}</span>
+            </dt>
+            <dt>
+              Location : <span>{location}</span>
+            </dt>
+          </Info>
 
-        <PostList>
-          <h4>Your Posts:</h4>
-          {!userPostList.length ? (
-            <ListItem>No post </ListItem>
-          ) : (
-            userPostList.map((post) => (
-              <ListItem key={post._id}>
-                {post.name}
-                <button>Remove</button>
-              </ListItem>
-            ))
-          )}
-        </PostList>
-        <AddPostButton>Add Post</AddPostButton>
-      </ProfileGrid>
+          <PostList>
+            <h4>Your Posts:</h4>
+            {!userPostList.length ? (
+              <ListItem>No post </ListItem>
+            ) : (
+              userPostList.map((post) => (
+                <ListItem key={post._id}>
+                  {post.name}
+                  <button onClick={() => onDelete(post._id)}>Remove</button>
+                  {/* <button onClick={()=>onDelete(post.id)}>Udate</button> */}
+                </ListItem>
+              ))
+            )}
+          </PostList>
+          <AddPostButton
+            onClick={() => {
+              setAddPostEnabled(true);
+            }}
+          >
+            Add Post
+          </AddPostButton>
+        </ProfileGrid>
+      )}
     </>
   );
 }
