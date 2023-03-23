@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { StyledButton } from "../Button/Button.styled";
 
 export default function UpdatePost({ postId, isEditEnabled }) {
   // get today's date in ISO format YYYY-MM-DD and only 1st 10 char
   const postDate = new Date().toISOString().substring(0, 10);
+  const inputRef = useRef();
 
   const [postDetails, setPostDetails] = useState();
   const [price, setPrice] = useState();
+  const [availableDate, setAvailableDate] = useState();
   //   const [price, setPrice] = useState();
 
   useEffect(() => {
@@ -16,30 +18,34 @@ export default function UpdatePost({ postId, isEditEnabled }) {
       const postDataResponse = await postData.json();
       setPostDetails(postDataResponse);
       setPrice(postDataResponse.price);
+      setAvailableDate(postDataResponse.date_of_availability);
+      inputRef.current.focus();
     };
     fetchData().catch(console.error);
   }, []);
 
   async function handleUpdate(event) {
-    //     const post = new FormData(event.target);
-    //     const postUpdatedData = Object.fromEntries(product);
-    //     const response = await fetch(`/api/posts/${postId}`, {
-    //       method: "PUT",
-    //       body: JSON.stringify(postUpdatedData),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //     });
-    //     if (response.ok) {
-    //       await response.json();
-    //     } else {
-    //       console.error(`Error: ${response.status}`);
-    //     }
+    event.preventDefault();
+    const post = new FormData(event.target);
+    const postUpdatedData = Object.fromEntries(post);
+    const response = await fetch(`/api/posts/${postId}`, {
+      method: "PUT",
+      body: JSON.stringify(postUpdatedData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      await response.json();
+    } else {
+      console.error(`Error: ${response.status}`);
+    }
+    isEditEnabled(false);
   }
   // console.log(postDetails.name);
   if (postDetails) {
     //const { name, price, date_of_availability } = postDetails;
-    //console.log(name, price, date_of_availability);
+    // console.log("hu", price, date_of_availability);
     return (
       <>
         <StyledHeading>Add New Post</StyledHeading>
@@ -51,6 +57,7 @@ export default function UpdatePost({ postId, isEditEnabled }) {
             id="name"
             value={postDetails.name}
             required
+            readOnly
           />
 
           <StyledLabel htmlFor="price">Food Price €</StyledLabel>
@@ -61,19 +68,24 @@ export default function UpdatePost({ postId, isEditEnabled }) {
             id="price"
             value={price}
             required
+            ref={inputRef}
           />
 
           <StyledLabel htmlFor="date_of_availability">
             Availability Date
           </StyledLabel>
           <StyledInput
+            onChange={(event) =>
+              setAvailableDate(event.target.date_of_availability)
+            }
             type="date"
             name="date_of_availability"
             id="date_of_availability"
-            value={postDetails.date_of_availability}
+            value={availableDate}
             min={postDate}
             required
           />
+          <button>Update</button>
         </StyledForm>
       </>
     );

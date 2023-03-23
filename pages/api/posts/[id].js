@@ -14,9 +14,9 @@ export default async function handler(request, response) {
   }
 
   if (request.method === "PUT") {
-    const product = await Post.findByIdAndUpdate(id, { $set: request.body });
-    console.log(product);
-    return response.status(200).json(product);
+    const post = await Post.findByIdAndUpdate(id, { $set: request.body });
+    console.log("post update", post);
+    return response.status(200).json(post);
   }
 
   if (request.method === "DELETE") {
