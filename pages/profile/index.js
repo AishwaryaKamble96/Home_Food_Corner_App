@@ -1,7 +1,7 @@
 import Profile from "../../component/Profile";
 import { useEffect, useState } from "react";
 
-export default function ProfileDetails() {
+export default function ProfileDetails({ setPostList, postList }) {
   const id = "64196fcd3b78a48001ecaecf";
 
   const [userDetails, setUserDetails] = useState([]);
@@ -15,12 +15,12 @@ export default function ProfileDetails() {
     fetchData().catch(console.error);
   }, []);
 
-  // const userPostList = postList.filter((post) => post.user_id === id);
-
-  // if (!userPostList) return null;
-
-  // console.log("user", userDetails.username, userPostList);
-  //   const { _id, username, email_id, contactno } = userDetails;
-  //   console.log(_id, username, email_id, contactno);
-  return <Profile userData={userDetails} userId={id}></Profile>;
+  return (
+    <Profile
+      userData={userDetails}
+      userId={id}
+      setPostList={setPostList}
+      postList={postList}
+    ></Profile>
+  );
 }

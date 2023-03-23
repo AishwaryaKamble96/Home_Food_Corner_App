@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }) {
   // Fetched post list from Post Collection
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetch("/api");
+      const data = await fetch("/api/");
       const dataResponse = await data.json();
 
       setPostList(dataResponse);
@@ -42,6 +42,7 @@ export default function App({ Component, pageProps }) {
       <Layout>
         <Component
           postList={postList}
+          setPostList={setPostList}
           wishList={wishListPosts}
           onToggleWished={handleWishedPost}
           {...pageProps}

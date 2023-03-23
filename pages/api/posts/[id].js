@@ -15,7 +15,6 @@ export default async function handler(request, response) {
 
   if (request.method === "PUT") {
     const post = await Post.findByIdAndUpdate(id, { $set: request.body });
-    console.log("post update", post);
     return response.status(200).json(post);
   }
 

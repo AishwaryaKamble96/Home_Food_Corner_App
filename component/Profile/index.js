@@ -3,33 +3,19 @@ import styled from "styled-components";
 import PostForm from "../PostForm";
 import UpdatePost from "../UpdatePost";
 
-export default function Profile({ userData, userId }) {
-  //const { _id, username, email_id, contactno, location } = userData;
+export default function Profile({ postList, setPostList, userData, userId }) {
   const [addPostEnabled, setAddPostEnabled] = useState(false);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
-  const [postList, setPostList] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetch("/api/posts");
-      const postsData = await data.json();
-      setPostList(postsData);
-    };
-    fetchData().catch(console.error);
-  }, []);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
   if (!userPostList) return null;
 
-  console.log("user", userData.username, userPostList);
-
   async function handleRender() {
     const data = await fetch("/api/posts");
     const postData = await data.json();
     setPostList(postData);
-    //postList(postData);
   }
 
   async function onDelete(id) {
@@ -55,6 +41,7 @@ export default function Profile({ userData, userId }) {
           userId={userData._id}
           location={userData.location}
           addPostEnabled={setAddPostEnabled}
+          handleRender={handleRender}
         />
       ) : (
         <ProfileGrid>

@@ -10,7 +10,6 @@ export default function UpdatePost({ postId, isEditEnabled }) {
   const [postDetails, setPostDetails] = useState();
   const [price, setPrice] = useState();
   const [availableDate, setAvailableDate] = useState();
-  //   const [price, setPrice] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,10 +41,8 @@ export default function UpdatePost({ postId, isEditEnabled }) {
     }
     isEditEnabled(false);
   }
-  // console.log(postDetails.name);
+
   if (postDetails) {
-    //const { name, price, date_of_availability } = postDetails;
-    // console.log("hu", price, date_of_availability);
     return (
       <>
         <StyledHeading>Add New Post</StyledHeading>

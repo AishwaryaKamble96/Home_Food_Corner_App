@@ -1,21 +1,51 @@
 import styled from "styled-components";
 import { StyledButton } from "../Button/Button.styled";
+import { useState } from "react";
 
-export default function PostForm({ userId, location, addPostEnabled }) {
+export default function PostForm({
+  userId,
+  location,
+  addPostEnabled,
+  handleRender,
+}) {
   // get today's date in ISO format YYYY-MM-DD and only 1st 10 char
   const postDate = new Date().toISOString().substring(0, 10);
 
+  const [imageSrc, setImageSrc] = useState();
+  const [uploadData, setUploadData] = useState();
+
   async function handleSubmit(event) {
+    event.preventDefault();
     const form = new FormData(event.target);
+
     const formData = Object.fromEntries(form);
 
-    // add form data and useri in new object
+    const fileInput = Array.from(event.target.elements).find(
+      ({ name }) => name === "file"
+    );
+    const imageFormData = new FormData();
+
+    for (const file of fileInput.files) {
+      imageFormData.append("file", file);
+    }
+
+    imageFormData.append("upload_preset", "aartyakp");
+
+    const data = await fetch(
+      "https://api.cloudinary.com/v1_1/dpd1hde6k/image/upload",
+      {
+        method: "POST",
+        body: imageFormData,
+      }
+    ).then((r) => r.json());
+
     const newPostData = {
       ...formData,
+      image_url: data.url,
       user_id: userId,
     };
 
-    const response = await fetch("/api/posts", {
+    const response = await fetch("/api/posts/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,9 +58,23 @@ export default function PostForm({ userId, location, addPostEnabled }) {
       await response.json();
       event.target.reset();
       addPostEnabled(false);
+      setImageSrc(data.secure_url);
+      setUploadData(data);
+      handleRender();
     } else {
       console.error(response.status);
     }
+  }
+
+  function handleOnChange(changeEvent) {
+    const reader = new FileReader();
+
+    reader.onload = function (onLoadEvent) {
+      setImageSrc(onLoadEvent.target.result);
+      setUploadData(undefined);
+    };
+
+    reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
   function handleBackButton() {
@@ -71,8 +115,20 @@ export default function PostForm({ userId, location, addPostEnabled }) {
           value={postDate}
           readonly
         />
+
+        {/* // Image upload section */}
+
         <StyledLabel htmlFor="image_url">Select Food Image</StyledLabel>
-        <StyledInput type="text" name="image_url" id="image_url" required />
+        <input type="file" name="file" onChange={handleOnChange} />
+        <img src={imageSrc} width={180} height={150} />
+        {/* <StyledInput type="text" name="image_url" id="image_url" required /> */}
+
+        {imageSrc && !uploadData && (
+          <p>
+            <button>Upload Files</button>
+          </p>
+        )}
+
         <StyledLabel htmlFor="location">Location</StyledLabel>
         <StyledInput
           type="text"

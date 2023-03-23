@@ -12,6 +12,7 @@ export default async function handler(request, response) {
   if (request.method === "POST") {
     try {
       const postData = request.body;
+
       const post = new Post(postData);
       await post.save();
       return response.status(201).json({ status: "Post created." });
