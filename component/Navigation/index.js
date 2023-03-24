@@ -15,6 +15,7 @@ export default function Navigation() {
       <Link href="/profile">
         <Image src={"/img/user.png"} alt="Wishlist" width={50} height={50} />
       </Link>
+      {/* <Link href="/login">Login</Link> */}
     </LinkNavigation>
   );
 }

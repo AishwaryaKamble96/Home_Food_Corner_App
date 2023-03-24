@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import PostForm from "../PostForm";
 import UpdatePost from "../UpdatePost";
+import UserDetailsForm from "../UserDetailsForm";
 
 export default function Profile({ postList, setPostList, userData, userId }) {
   const [addPostEnabled, setAddPostEnabled] = useState(false);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
+  const [addUserDetails, setAddUserDetails] = useState(false);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
@@ -45,10 +47,10 @@ export default function Profile({ postList, setPostList, userData, userId }) {
         />
       ) : (
         <ProfileGrid>
-          <ProfileTitle>Hello, {userData.username}</ProfileTitle>
+          <ProfileTitle>Hello, {userData.name}</ProfileTitle>
           <Info>
             <dt>
-              Email Id : <span>{userData.email_id}</span>
+              Email Id : <span>{userData.email}</span>
             </dt>
             <dt>
               Contact No : <span>{userData.contactno}</span>
@@ -56,6 +58,13 @@ export default function Profile({ postList, setPostList, userData, userId }) {
             <dt>
               Location : <span>{userData.location}</span>
             </dt>
+            <button onClick={() => setAddUserDetails(true)}>Add Details</button>
+            {addUserDetails && (
+              <UserDetailsForm
+                userData={userData}
+                addUserDetails={setAddUserDetails}
+              />
+            )}
           </Info>
 
           <PostList>
