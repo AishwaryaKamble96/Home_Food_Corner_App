@@ -4,7 +4,13 @@ import PostForm from "../PostForm";
 import UpdatePost from "../UpdatePost";
 import UserDetailsForm from "../UserDetailsForm";
 
-export default function Profile({ userData, userId, postList, setPostList }) {
+export default function Profile({
+  userData,
+  userId,
+  postList,
+  setPostList,
+  setUserDetails,
+}) {
   const [addPostEnabled, setAddPostEnabled] = useState(false);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
@@ -64,7 +70,7 @@ export default function Profile({ userData, userId, postList, setPostList }) {
               <UserDetailsForm
                 userData={userData}
                 addUserDetails={setAddUserDetails}
-                handleRender={handleRender}
+                setUserDetails={setUserDetails}
               />
             )}
           </Info>

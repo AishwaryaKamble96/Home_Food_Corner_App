@@ -1,12 +1,16 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 export default function UserDetails({
   userData,
   addUserDetails,
-  handleRender,
+  setUserDetails,
 }) {
+  const [contactno, setContactno] = useState(userData.contactno);
+  const [location, setLocation] = useState(userData.location);
+
+  const id = userData._id;
   async function handleUpdate(event) {
-    const id = userData._id;
     event.preventDefault();
     const form = event.target.elements;
     const contactno = form.contactno.value;
@@ -25,11 +29,17 @@ export default function UserDetails({
     });
     if (response.ok) {
       await response.json();
-      handleRender();
+      handleUserDetailsRender();
     } else {
       console.error(`Error: ${response.status}`);
     }
     addUserDetails(false);
+  }
+
+  async function handleUserDetailsRender() {
+    const data = await fetch(`/api/users/${id}`);
+    const userData = await data.json();
+    setUserDetails(userData);
   }
 
   return (
@@ -37,18 +47,20 @@ export default function UserDetails({
       <StyledForm onSubmit={handleUpdate}>
         <StyledLabel htmlFor="contactno">Contact No:</StyledLabel>
         <StyledInput
+          onChange={(event) => setContactno(event.target.contactno)}
           type="text"
           name="contactno"
           id="contactno"
-          value={userData.contactno}
+          value={contactno}
           required
         />
         <StyledLabel htmlFor="location">Location:</StyledLabel>
         <StyledInput
+          onChange={(event) => setLocation(event.target.location)}
           type="text"
           name="location"
           id="location"
-          value={userData.location}
+          value={location}
           required
         />
         <button>Submit</button>
