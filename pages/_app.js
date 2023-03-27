@@ -5,7 +5,10 @@ import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
 import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps, session }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [postList, setPostList] = useState([]);
   const [wishListPosts, setWishListPosts] = useLocalStorageState(
     "wishListPosts",
@@ -39,9 +42,9 @@ export default function App({ Component, pageProps, session }) {
 
   return (
     <>
-      <GlobalStyle />
-      <Layout>
-        <SessionProvider session={session}>
+      <SessionProvider session={session}>
+        <GlobalStyle />
+        <Layout>
           <Component
             postList={postList}
             setPostList={setPostList}
@@ -49,9 +52,9 @@ export default function App({ Component, pageProps, session }) {
             onToggleWished={handleWishedPost}
             {...pageProps}
           />
-        </SessionProvider>
-      </Layout>
-      <Footer />
+        </Layout>
+        <Footer />
+      </SessionProvider>
     </>
   );
 }

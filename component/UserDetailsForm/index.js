@@ -1,13 +1,17 @@
 import styled from "styled-components";
 
-export default function UserDetails({ userData, addUserDetails }) {
+export default function UserDetails({
+  userData,
+  addUserDetails,
+  handleRender,
+}) {
   async function handleUpdate(event) {
     const id = userData._id;
     event.preventDefault();
     const form = event.target.elements;
     const contactno = form.contactno.value;
     const location = form.location.value;
-    console.log("data user", contactno, location);
+
     const response = await fetch(`/api/users/${id}`, {
       method: "PATCH",
       body: JSON.stringify({
@@ -21,6 +25,7 @@ export default function UserDetails({ userData, addUserDetails }) {
     });
     if (response.ok) {
       await response.json();
+      handleRender();
     } else {
       console.error(`Error: ${response.status}`);
     }

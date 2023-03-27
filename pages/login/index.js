@@ -1,21 +1,34 @@
 import React from "react";
 import { useSession, signOut, signIn } from "next-auth/react";
+import styled from "styled-components";
 
 export default function login() {
   const { data: session } = useSession();
-  if (session) {
-    return (
-      <div>
-        <p>Welcome, {session.user.name}</p>
-        <button onClick={() => signOut()}>Sign Out</button>
-      </div>
-    );
-  } else {
-    return (
-      <div>
-        <p>Your are not signed in</p>
-        <button onClick={() => signIn()}>Sign In</button>
-      </div>
-    );
-  }
+
+  return (
+    <LoginPage>
+      {session ? (
+        <div>
+          <Intro>Welcome, {session.user.name}</Intro>
+          <button onClick={() => signOut()}>Sign Out</button>
+        </div>
+      ) : (
+        <div>
+          <Intro>Your are not signed in</Intro>
+          <button onClick={() => signIn()}>Sign In</button>
+        </div>
+      )}
+    </LoginPage>
+  );
 }
+
+const LoginPage = styled.div`
+  text-align: center;
+  margin: 80px;
+`;
+
+const Intro = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+`;
