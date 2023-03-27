@@ -26,6 +26,7 @@ export default function ProfileDetails({ setPostList, postList }) {
         userId={id}
         setPostList={setPostList}
         postList={postList}
+        setUserDetails={setUserDetails}
       ></Profile>
     );
   } else {
