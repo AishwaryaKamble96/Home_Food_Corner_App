@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import PostForm from "../PostForm";
 import UpdatePost from "../UpdatePost";
+import UserDetailsForm from "../UserDetailsForm";
 
-export default function Profile({ postList, setPostList, userData, userId }) {
+export default function Profile({ userData, userId, postList, setPostList }) {
   const [addPostEnabled, setAddPostEnabled] = useState(false);
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
+  const [addUserDetails, setAddUserDetails] = useState(false);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
@@ -45,10 +47,11 @@ export default function Profile({ postList, setPostList, userData, userId }) {
         />
       ) : (
         <ProfileGrid>
-          <ProfileTitle>Hello, {userData.username}</ProfileTitle>
+          <ProfileTitle>Hello, {userData.name}</ProfileTitle>
+
           <Info>
             <dt>
-              Email Id : <span>{userData.email_id}</span>
+              Email Id : <span>{userData.email}</span>
             </dt>
             <dt>
               Contact No : <span>{userData.contactno}</span>
@@ -56,6 +59,14 @@ export default function Profile({ postList, setPostList, userData, userId }) {
             <dt>
               Location : <span>{userData.location}</span>
             </dt>
+            <button onClick={() => setAddUserDetails(true)}>Add Details</button>
+            {addUserDetails && (
+              <UserDetailsForm
+                userData={userData}
+                addUserDetails={setAddUserDetails}
+                handleRender={handleRender}
+              />
+            )}
           </Info>
 
           <PostList>
@@ -72,13 +83,13 @@ export default function Profile({ postList, setPostList, userData, userId }) {
               ))
             )}
           </PostList>
-          <AddPostButton
+          <StyledButton
             onClick={() => {
               setAddPostEnabled(true);
             }}
           >
             Add Post
-          </AddPostButton>
+          </StyledButton>
           {isEditEnabled && (
             <UpdatePost
               postId={editablePostId}
@@ -92,8 +103,7 @@ export default function Profile({ postList, setPostList, userData, userId }) {
 }
 
 const ProfileTitle = styled.div`
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-weight: bold;
 `;
 
 const ProfileGrid = styled.section`
@@ -112,7 +122,7 @@ const Info = styled.div`
   border: 1px solid;
 `;
 
-const AddPostButton = styled.button`
+const StyledButton = styled.button`
   background-color: white;
   padding: 5px;
   border-radius: 5%;

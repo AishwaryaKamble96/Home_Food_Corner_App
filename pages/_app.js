@@ -3,8 +3,12 @@ import Footer from "../component/Navigation";
 import Layout from "../component/Layout";
 import { useState, useEffect } from "react";
 import useLocalStorageState from "use-local-storage-state";
+import { SessionProvider } from "next-auth/react";
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const [postList, setPostList] = useState([]);
   const [wishListPosts, setWishListPosts] = useLocalStorageState(
     "wishListPosts",
@@ -38,17 +42,19 @@ export default function App({ Component, pageProps }) {
 
   return (
     <>
-      <GlobalStyle />
-      <Layout>
-        <Component
-          postList={postList}
-          setPostList={setPostList}
-          wishList={wishListPosts}
-          onToggleWished={handleWishedPost}
-          {...pageProps}
-        />
-      </Layout>
-      <Footer />
+      <SessionProvider session={session}>
+        <GlobalStyle />
+        <Layout>
+          <Component
+            postList={postList}
+            setPostList={setPostList}
+            wishList={wishListPosts}
+            onToggleWished={handleWishedPost}
+            {...pageProps}
+          />
+        </Layout>
+        <Footer />
+      </SessionProvider>
     </>
   );
 }

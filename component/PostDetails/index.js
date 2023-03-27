@@ -19,32 +19,6 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
 
   return (
     <>
-      {/* <DetailsWrapper>
-        <ImageWrapper>
-          <Image
-            src={postDetails.image_url}
-            alt={postDetails.name}
-            height={280}
-            width={450}
-            priority
-          ></Image>
-          <WishedButton
-            postID={postDetails._id}
-            wishList={wishList}
-            onToggleWished={onToggleWished}
-          />
-        </ImageWrapper>
-        <DetailedInfo>
-          <dt>Name: {postDetails.name}</dt>
-          <dt>Food Content :{postDetails.content}</dt>
-          <dt>Price: €{postDetails.price}</dt>
-          <dt>Available on:{postDetails.date_of_availability}</dt>
-          <dt>Posted on:{postDetails.date_of_post}</dt>
-          <dt>Loation:{postDetails.location}</dt>
-          <dt>shipping Type:{postDetails.shipping_type}</dt>
-          <dt>Food Type:{postDetails.tag}</dt>
-        </DetailedInfo>
-      </DetailsWrapper> */}
       <DetailsWrapper>
         <ImageWrapper>
           <Image
