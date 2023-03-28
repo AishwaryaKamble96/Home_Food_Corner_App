@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import WishedButton from "../WishedButton";
 import PostReviews from "../PostReviews";
-
+import { useSession } from "next-auth/react";
 export default function PostDetails({ postDetails, onToggleWished, wishList }) {
   const [postUserDetails, setPostUserDetails] = useState({});
   const [reviewsList, setReviewsList] = useState([]);
-  //const [postReviewList, setPostReviewList] = useState([]);
+
   let postReviewList = [];
+
+  const { data: session } = useSession();
+
   // destructure the postDetails object
   const {
     _id,
@@ -45,7 +48,7 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
         method: "GET",
       });
       const reviewsDataResponse = await reviewsData.json();
-      console.log("called");
+
       setReviewsList(reviewsDataResponse);
     };
     fetchData().catch(console.error);
@@ -55,7 +58,7 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
   } else {
     return null;
   }
-  console.log("reviews", postReviewList);
+
   return (
     <>
       <DetailsWrapper>
@@ -83,7 +86,9 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
           <dt>shipping Type:{shipping_type}</dt>
           <dt>Food Type:{tag}</dt>
           <dt>User Name:{postUserDetails.name}</dt>
-          <PostReviews postId={_id} setReviewsList={setReviewsList} />
+          {session != null && (
+            <PostReviews postId={_id} setReviewsList={setReviewsList} />
+          )}
         </DetailedInfo>
 
         <ReviewSection>

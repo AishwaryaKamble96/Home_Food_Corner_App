@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 export default function PostReviews({ postId, setReviewsList }) {
   const { data: session } = useSession();
 
-  const reviewId = session.user.id;
+  const reviewerId = session.user.id;
 
   async function handleReviewRender() {
     const data = await fetch("/api/reviews");
@@ -17,7 +17,7 @@ export default function PostReviews({ postId, setReviewsList }) {
     const newReview = {
       review: reviewText,
       postId: postId,
-      userId: reviewId,
+      userId: reviewerId,
     };
 
     const response = await fetch("/api/reviews/", {
