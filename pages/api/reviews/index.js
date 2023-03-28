@@ -4,11 +4,14 @@ import Review from "../../../db/models/Reviews";
 export default async function handler(request, response) {
   await dbConnect();
 
-  if (request === "GET") {
+  // const { id } = request.query;
+  // console.log("id:", id);
+
+  if (request.method === "GET") {
     const reviews = await Review.find();
     response.status(200).json(reviews);
   }
-
+  // { postId: id }
   if (request.method === "POST") {
     try {
       const reviewData = request.body;
