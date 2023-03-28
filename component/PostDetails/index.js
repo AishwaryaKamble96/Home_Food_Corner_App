@@ -86,8 +86,10 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
           <dt>shipping Type:{shipping_type}</dt>
           <dt>Food Type:{tag}</dt>
           <dt>User Name:{postUserDetails.name}</dt>
-          {session != null && (
+          {session != null ? (
             <PostReviews postId={_id} setReviewsList={setReviewsList} />
+          ) : (
+            <Note>To add review,Please Login!</Note>
           )}
         </DetailedInfo>
 
@@ -137,4 +139,12 @@ const ReviewStyled = styled.li`
   background-color: whitesmoke;
   border-radius: 25%;
   border-color: black;
+`;
+const Note = styled.div`
+  font-size: small;
+  border: 1px black;
+  border-radius: 15%;
+  background-color: whitesmoke;
+  margin: 10px;
+  padding: 10px;
 `;
