@@ -16,64 +16,68 @@ export default function PostForm({
 
   async function handleSubmit(event) {
     event.preventDefault();
-    const form = new FormData(event.target);
+    try {
+      const form = new FormData(event.target);
+      const formData = Object.fromEntries(form);
+      const fileInput = Array.from(event.target.elements).find(
+        ({ name }) => name === "file"
+      );
+      const imageFormData = new FormData();
 
-    const formData = Object.fromEntries(form);
-
-    const fileInput = Array.from(event.target.elements).find(
-      ({ name }) => name === "file"
-    );
-    const imageFormData = new FormData();
-
-    for (const file of fileInput.files) {
-      imageFormData.append("file", file);
-    }
-
-    imageFormData.append("upload_preset", "aartyakp");
-
-    const data = await fetch(
-      "https://api.cloudinary.com/v1_1/dpd1hde6k/image/upload",
-      {
-        method: "POST",
-        body: imageFormData,
+      for (const file of fileInput.files) {
+        imageFormData.append("file", file);
       }
-    ).then((r) => r.json());
 
-    const newPostData = {
-      ...formData,
-      image_url: data.url,
-      user_id: userId,
-    };
+      imageFormData.append("upload_preset", "aartyakp");
 
-    const response = await fetch("/api/posts/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newPostData),
-    });
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/dpd1hde6k/image/upload",
+        {
+          method: "POST",
+          body: imageFormData,
+        }
+      ).then((r) => r.json());
 
-    //On resonse ok=> reset the form fields an set addPostEnabled to show profile component
-    if (response.ok) {
-      await response.json();
-      event.target.reset();
-      addPostEnabled(false);
-      setImageSrc(data.secure_url);
-      setUploadData(data);
-      handleRender();
-    } else {
-      console.error(response.status);
+      const newPostData = {
+        ...formData,
+        image_url: data.url,
+        user_id: userId,
+      };
+
+      const response = await fetch("/api/posts/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPostData),
+      });
+
+      //On resonse ok=> reset the form fields an set addPostEnabled to show profile component
+      if (response.ok) {
+        await response.json();
+        event.target.reset();
+        addPostEnabled(false);
+        setImageSrc(data.secure_url);
+        setUploadData(data);
+        handleRender();
+        alert("Successfully post is created");
+      } else {
+        console.error(response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert(
+        "Error: Unable to create new post at this time. Please try again later."
+      );
     }
   }
 
   function handleOnChange(changeEvent) {
     const reader = new FileReader();
-
     reader.onload = function (onLoadEvent) {
       setImageSrc(onLoadEvent.target.result);
       setUploadData(undefined);
     };
-
     reader.readAsDataURL(changeEvent.target.files[0]);
   }
 
@@ -119,9 +123,8 @@ export default function PostForm({
         {/* // Image upload section */}
 
         <StyledLabel htmlFor="image_url">Select Food Image</StyledLabel>
-        <input type="file" name="file" onChange={handleOnChange} />
+        <input type="file" name="file" onChange={handleOnChange} required />
         <img src={imageSrc} width={180} height={150} />
-        {/* <StyledInput type="text" name="image_url" id="image_url" required /> */}
 
         {imageSrc && !uploadData && (
           <p>
@@ -136,17 +139,18 @@ export default function PostForm({
           id="location"
           value={location}
           readOnly
+          required
         />
         <StyledLabel htmlFor="shipping_type">Delivery Type</StyledLabel>
         <select name="shipping_type" id="shipping_type" required>
-          <option value="select">Select available service</option>
+          <option value="">Select available service</option>
           <option value="homepickup">Home Pickup</option>
 
           <option value="doorstep">Door Step delivery</option>
         </select>
         <StyledLabel htmlFor="tag">Food Tag</StyledLabel>
         <select name="tag" id="tag" required>
-          <option value="select">Select</option>
+          <option value="">Select</option>
           <option value="vegan">Vegan</option>
           <option value="veg">Veg</option>
           <option value="nonveg">Non-Veg</option>

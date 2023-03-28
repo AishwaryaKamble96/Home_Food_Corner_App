@@ -10,6 +10,7 @@ export default function UserDetails({
   const [location, setLocation] = useState(userData.location);
 
   const id = userData._id;
+
   async function handleUpdate(event) {
     event.preventDefault();
     const form = event.target.elements;
@@ -27,11 +28,16 @@ export default function UserDetails({
         "Content-Type": "application/json",
       },
     });
+
     if (response.ok) {
       await response.json();
+      alert("Successfully your details are updated");
       handleUserDetailsRender();
     } else {
       console.error(`Error: ${response.status}`);
+      alert(
+        "Error: Unable to update your details at this time. Please try again later."
+      );
     }
     addUserDetails(false);
   }
