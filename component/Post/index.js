@@ -8,6 +8,7 @@ export default function Post({ postData, wishList, onToggleWished }) {
   const router = useRouter();
 
   //Route to the respective post details by food name
+
   function handleDetailsClick() {
     const foodId = postData._id;
     const detailsPageUrl = `/${foodId}`;

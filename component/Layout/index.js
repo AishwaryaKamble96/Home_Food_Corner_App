@@ -1,15 +1,24 @@
 import TitleBar from "../TitleBar";
 import Link from "next/link";
 import styled from "styled-components";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 export default function Layout({ children }) {
   const { data: session } = useSession();
+  const router = useRouter();
+
+  async function handleSignOut() {
+    await router.push("/");
+    signOut();
+  }
   return (
     <>
       <TitleBar />
       {session ? (
-        <StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
-      ) : null}
+        <StyledButton onClick={() => handleSignOut()}>Sign Out</StyledButton>
+      ) : (
+        <StyledButton onClick={() => signIn()}>Login</StyledButton>
+      )}
       <main>{children}</main>
     </>
   );

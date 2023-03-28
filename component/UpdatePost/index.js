@@ -5,7 +5,6 @@ import { StyledButton } from "../Button/Button.styled";
 export default function UpdatePost({ postId, isEditEnabled }) {
   // get today's date in ISO format YYYY-MM-DD and only 1st 10 char
   const postDate = new Date().toISOString().substring(0, 10);
-  const inputRef = useRef();
 
   const [postDetails, setPostDetails] = useState();
   const [price, setPrice] = useState();
@@ -18,7 +17,6 @@ export default function UpdatePost({ postId, isEditEnabled }) {
       setPostDetails(postDataResponse);
       setPrice(postDataResponse.price);
       setAvailableDate(postDataResponse.date_of_availability);
-      inputRef.current.focus();
     };
     fetchData().catch(console.error);
   }, []);
@@ -36,7 +34,11 @@ export default function UpdatePost({ postId, isEditEnabled }) {
     });
     if (response.ok) {
       await response.json();
+      alert("Successfully post details are updated");
     } else {
+      alert(
+        "Error: Unable to update post details at this time. Please try again later."
+      );
       console.error(`Error: ${response.status}`);
     }
     isEditEnabled(false);
@@ -65,7 +67,7 @@ export default function UpdatePost({ postId, isEditEnabled }) {
             id="price"
             value={price}
             required
-            ref={inputRef}
+            autoFocus
           />
 
           <StyledLabel htmlFor="date_of_availability">

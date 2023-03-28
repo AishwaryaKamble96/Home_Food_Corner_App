@@ -15,10 +15,17 @@ export default function Profile({
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
   const [addUserDetails, setAddUserDetails] = useState(false);
+  const [isUserDetailsAdded, setIsUserDetailsAdded] = useState(false);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
   if (!userPostList) return null;
+
+  function handleRequiredUserDetails() {
+    if (userData.contactno && userData.location) {
+      setAddPostEnabled(true);
+    }
+  }
 
   async function handleRender() {
     const data = await fetch("/api/posts");
@@ -31,6 +38,7 @@ export default function Profile({
     if (response.ok) {
       await response.json();
       handleRender();
+      alert("Successfully post is deleted");
     } else {
       console.error(`Error: ${response.status}`);
     }
@@ -54,7 +62,6 @@ export default function Profile({
       ) : (
         <ProfileGrid>
           <ProfileTitle>Hello, {userData.name}</ProfileTitle>
-
           <Info>
             <dt>
               Email Id : <span>{userData.email}</span>
@@ -74,7 +81,6 @@ export default function Profile({
               />
             )}
           </Info>
-
           <PostList>
             <h4>Your Posts:</h4>
             {!userPostList.length ? (
@@ -89,13 +95,13 @@ export default function Profile({
               ))
             )}
           </PostList>
-          <StyledButton
-            onClick={() => {
-              setAddPostEnabled(true);
-            }}
-          >
+          <StyledButton onClick={handleRequiredUserDetails}>
             Add Post
           </StyledButton>
+          {!userData.contactno && !userData.location && (
+            <Warning>Kindly fill Contact-no and Location</Warning>
+          )}
+
           {isEditEnabled && (
             <UpdatePost
               postId={editablePostId}
@@ -151,4 +157,9 @@ const ListItem = styled.li`
   justify-content: space-evenly;
   display: flex;
   gap: 5px;
+`;
+
+const Warning = styled.div`
+  color: red;
+  font-size: small;
 `;
