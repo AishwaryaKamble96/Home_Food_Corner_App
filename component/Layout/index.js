@@ -29,4 +29,7 @@ const StyledButton = styled.button`
   border-radius: 5%;
   width: 100px;
   border: 1px solid;
+  position: relative;
+  left: 70%;
+  transform: translateY(12px);
 `;

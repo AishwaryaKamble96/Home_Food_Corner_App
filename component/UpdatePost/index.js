@@ -96,6 +96,7 @@ const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  backdrop-filter: blur(5px);
 `;
 const StyledLabel = styled.label`
   display: flex;

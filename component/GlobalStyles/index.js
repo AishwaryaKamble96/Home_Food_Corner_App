@@ -8,11 +8,13 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        margin:0;
+        margin:auto;
         font-family: sans-serif;
       background-color:whitesmoke;
-      background: url(/img/backgroundImg2.jpg) no-repeat center center fixed;
+      background: url(/img/backgroundImg4.jpg) no-repeat center center fixed;
       background-size:cover;
+     
+     
     }
 `;
 

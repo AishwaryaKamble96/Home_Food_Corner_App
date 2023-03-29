@@ -10,7 +10,7 @@ const Heading = styled.h1`
 
   background-color: whitesmoke;
   justify-content: center;
-  margin: 10px;
+  margin: 0;
   padding: 20px;
   border-bottom: solid black;
 `;

@@ -66,8 +66,9 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
           <Image
             src={image_url}
             alt={name}
-            height={280}
-            width={450}
+            //height={280}
+            width
+            style={{ height: "50%", width: "80%" }}
             priority
           ></Image>
           <WishedButton
@@ -77,39 +78,79 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
           />
         </ImageWrapper>
         <DetailedInfo>
-          <dt>Name: {name}</dt>
-          <dt>Food Content :{content}</dt>
-          <dt>Price: €{price}</dt>
-          <dt>Available on:{date_of_availability}</dt>
-          <dt>Posted on:{date_of_post}</dt>
-          <dt>Location:{location}</dt>
-          <dt>shipping Type:{shipping_type}</dt>
-          <dt>Food Type:{tag}</dt>
-          <dt>User Name:{postUserDetails.name}</dt>
+          <p>
+            Name
+            <br />
+            <Value> {name}</Value>
+          </p>
+          <p>
+            Food Content
+            <br />
+            <Value> {content}</Value>
+          </p>
+          <p>
+            Price
+            <br />
+            <Value> €{price}</Value>
+          </p>
+          <p>
+            Available on <br />
+            <Value>{date_of_availability}</Value>
+          </p>
+          <p>
+            Posted on
+            <br />
+            <Value> {date_of_post}</Value>
+          </p>
+          <p>
+            Location <br />
+            <Value> {location}</Value>
+          </p>
+          <p>
+            Shipping Type <br />
+            <Value> {shipping_type}</Value>
+          </p>
+          <p>
+            Food Type <br />
+            <Value> {tag}</Value>
+          </p>
+          <p>
+            User Name <br />
+            <Value> {postUserDetails.name}</Value>
+          </p>
+          <p>
+            User Contact No <br />
+            <Value>{postUserDetails.contactno}</Value>
+          </p>
+        </DetailedInfo>
+
+        <ReviewSection>
           {session != null ? (
             <PostReviews postId={_id} setReviewsList={setReviewsList} />
           ) : (
             <Note>To add review,Please Login!</Note>
           )}
-        </DetailedInfo>
-
-        <ReviewSection>
-          <ul>
-            {postReviewList.map((review) => {
-              return (
-                <ReviewStyled key={review._id}>{review.review}</ReviewStyled>
-              );
-            })}
-          </ul>
         </ReviewSection>
+        <ReviewListWrapper>
+          <p>Customer Reviews</p>
+          {postReviewList.map((review) => {
+            return (
+              <ReviewStyled key={review._id}>
+                <div>{review.review}</div>
+                <div>{review.reviewDate}</div>
+              </ReviewStyled>
+            );
+          })}
+        </ReviewListWrapper>
       </DetailsWrapper>
     </>
   );
 }
 
 const ImageWrapper = styled.div`
+  position: relative;
+  border-style: ridge;
   display: flex;
-  flex-direction: row;
 `;
 const DetailsWrapper = styled.section`
   display: flex;
@@ -121,29 +162,47 @@ const DetailsWrapper = styled.section`
 `;
 
 const DetailedInfo = styled.div`
-  margin: 0 30px 20px 40px;
-  font-weight: bold;
-  color: black;
-  padding: 20px;
+  padding: 10px;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  color: white;
+`;
+
+const Value = styled.span`
+  font-size: 25px;
 `;
 const ReviewSection = styled.div`
-  margin: 10px;
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  margin: 5px;
   padding: 5px;
   display: flex;
+  flex-direction: row;
+`;
+
+const ReviewListWrapper = styled.ul`
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
+  display: flex;
+  flex-direction: column;
   gap: 5px;
+  color: white;
+  font-size: large;
 `;
 
 const ReviewStyled = styled.li`
   list-style: none;
-  padding: 5px;
+  color: black;
+  font-size: large;
+  border-radius: 5px;
   background-color: whitesmoke;
-  border-radius: 25%;
-  border-color: black;
+  padding: 3px;
+  display: flex;
+  justify-content: space-evenly;
 `;
 const Note = styled.div`
   font-size: small;
   border: 1px black;
-  border-radius: 15%;
   background-color: whitesmoke;
   margin: 10px;
   padding: 10px;

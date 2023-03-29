@@ -24,7 +24,9 @@ const HeartButton = styled.button`
   appearance: none;
   background: none;
   border: none;
-  position: relative;
+  position: absolute;
   top: 10px;
+  right: 0;
   height: 10px;
+  transform: translate(-50%, -50%);
 `;
