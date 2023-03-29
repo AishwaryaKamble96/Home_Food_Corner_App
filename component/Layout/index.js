@@ -1,5 +1,5 @@
 import TitleBar from "../TitleBar";
-import Link from "next/link";
+
 import styled from "styled-components";
 import { useSession, signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
