@@ -56,12 +56,11 @@ const PostWrapper = styled.li`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-
   padding: 20px;
   background-color: rgb(251, 252, 252);
-
   position: relative;
   width: 100%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 const HeartButton = styled.button`
   appearance: none;
@@ -70,11 +69,15 @@ const HeartButton = styled.button`
   position: relative;
   top: 10px;
   height: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const InfoWrapper = styled.div``;
 const DetailsButton = styled.button`
   position: relative;
   top: 30px;
-  height: 20px;
+  height: 30px;
+  padding: 5px;
+  background-color: #f5ecdb;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

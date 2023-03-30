@@ -62,15 +62,33 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
   return (
     <>
       <DetailsWrapper>
-        <ImageWrapper>
+        <ImageWrapper style={{ margin: "auto", maxWidth: "1000px" }}>
           <Image
             src={image_url}
             alt={name}
-            //height={280}
-            width
-            style={{ height: "50%", width: "80%" }}
+            height={280}
+            width={780}
+            style={{
+              width: "auto",
+              objectFit: "contain",
+              position: "relative",
+            }}
             priority
           ></Image>
+          {/* <ImageWrapper style={{ margin: "auto", maxWidth: "1000px" }}>
+          <Image
+            src={image_url}
+            alt={name}
+            height={280}
+            width={780}
+            style={{
+              width: "auto",
+              objectFit: "contain",
+              position: "relative",
+            }}
+            priority
+          ></Image>
+         */}
           <WishedButton
             postID={_id}
             wishList={wishList}
@@ -136,7 +154,7 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
           {postReviewList.map((review) => {
             return (
               <ReviewStyled key={review._id}>
-                <div>{review.review}</div>
+                <ReviewText>{review.review}</ReviewText>
                 <div>{review.reviewDate}</div>
               </ReviewStyled>
             );
@@ -150,7 +168,6 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
 const ImageWrapper = styled.div`
   position: relative;
   border-style: ridge;
-  display: flex;
 `;
 const DetailsWrapper = styled.section`
   display: flex;
@@ -166,8 +183,8 @@ const DetailedInfo = styled.div`
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/opacity/see-through */
   color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
-
 const Value = styled.span`
   font-size: 25px;
 `;
@@ -188,6 +205,7 @@ const ReviewListWrapper = styled.ul`
   gap: 5px;
   color: white;
   font-size: large;
+  padding: 10px;
 `;
 
 const ReviewStyled = styled.li`
@@ -199,6 +217,10 @@ const ReviewStyled = styled.li`
   padding: 3px;
   display: flex;
   justify-content: space-evenly;
+`;
+
+const ReviewText = styled.div`
+  width: 180px;
 `;
 const Note = styled.div`
   font-size: small;

@@ -51,7 +51,7 @@ export default function PostReviews({ postId, setReviewsList }) {
           size={50}
           required
         ></input>
-        <button>Add</button>
+        <AddButton>Add</AddButton>
       </StyledForm>
     </>
   );
@@ -61,5 +61,11 @@ const StyledForm = styled.form`
   display: flex;
   width: 100%;
   height: 40px;
+  padding: 5px;
   flex-direction: row;
+`;
+
+const AddButton = styled.button`
+  padding: 5px;
+  background-color: #f5ecdb;
 `;

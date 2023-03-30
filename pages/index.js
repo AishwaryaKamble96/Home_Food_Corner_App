@@ -68,12 +68,14 @@ const PostList = styled.ul`
 const Search = styled.input`
   width: 70%;
   height: 30px;
-  border-radius: 1%;
-
+  border-radius: 2%;
+  padding: 10px;
   background-color: rgb(253, 254, 254);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const SearchBox = styled.form`
   display: flex;
   justify-content: center;
+  padding: 10px;
 `;

@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
-
+import { useRouter } from "next/router";
 export default function Navigation() {
+  const router = useRouter();
   return (
     <LinkNavigation>
       <Link href="/">
@@ -27,5 +28,6 @@ const LinkNavigation = styled.nav`
   justify-content: space-evenly;
   margin: 0;
   padding: 10px;
-  background-color: lightslategray;
+  background-color: #f2dc8a;
+  //lightslategray;
 `;

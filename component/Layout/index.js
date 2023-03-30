@@ -24,12 +24,14 @@ export default function Layout({ children }) {
   );
 }
 const StyledButton = styled.button`
-  background-color: white;
-  padding: 5px;
+  background-color: #edb648;
+  padding: 10px;
   border-radius: 5%;
   width: 100px;
   border: 1px solid;
+  color: white;
   position: relative;
-  left: 70%;
+  left: 80%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   transform: translateY(12px);
 `;
