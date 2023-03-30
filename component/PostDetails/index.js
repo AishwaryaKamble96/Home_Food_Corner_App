@@ -4,6 +4,7 @@ import styled from "styled-components";
 import WishedButton from "../WishedButton";
 import PostReviews from "../PostReviews";
 import { useSession } from "next-auth/react";
+
 export default function PostDetails({ postDetails, onToggleWished, wishList }) {
   const [postUserDetails, setPostUserDetails] = useState({});
   const [reviewsList, setReviewsList] = useState([]);
@@ -41,7 +42,6 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
   if (!postUserDetails) return null;
 
   // Get reviews based on post Id if any
-
   useEffect(() => {
     const fetchData = async () => {
       const reviewsData = await fetch("/api/reviews", {
@@ -53,6 +53,8 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
     };
     fetchData().catch(console.error);
   }, []);
+
+  //Check if review list is empty or not
   if (reviewsList) {
     postReviewList = reviewsList.filter((review) => review.postId === _id);
   } else {
@@ -75,20 +77,7 @@ export default function PostDetails({ postDetails, onToggleWished, wishList }) {
             }}
             priority
           ></Image>
-          {/* <ImageWrapper style={{ margin: "auto", maxWidth: "1000px" }}>
-          <Image
-            src={image_url}
-            alt={name}
-            height={280}
-            width={780}
-            style={{
-              width: "auto",
-              objectFit: "contain",
-              position: "relative",
-            }}
-            priority
-          ></Image>
-         */}
+
           <WishedButton
             postID={_id}
             wishList={wishList}

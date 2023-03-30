@@ -1,4 +1,5 @@
 import Post from "../../component/Post";
+import styled from "styled-components";
 
 export default function WishListPage({ postList, wishList, onToggleWished }) {
   //Filter list for post id whose isWished status is true
@@ -10,18 +11,34 @@ export default function WishListPage({ postList, wishList, onToggleWished }) {
 
   return (
     <>
-      <ul>
-        {wishedPageList.map((post) => {
-          return (
-            <Post
-              postData={post}
-              key={post._id}
-              wishList={wishList}
-              onToggleWished={onToggleWished}
-            ></Post>
-          );
-        })}
-      </ul>
+      <AppGrid>
+        <PostList>
+          {wishedPageList.map((post) => {
+            return (
+              <Post
+                postData={post}
+                key={post._id}
+                wishList={wishList}
+                onToggleWished={onToggleWished}
+              ></Post>
+            );
+          })}
+        </PostList>
+      </AppGrid>
     </>
   );
 }
+
+const PostList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+`;
+
+const AppGrid = styled.section`
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-bottom: 80px;
+`;

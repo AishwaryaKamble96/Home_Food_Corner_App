@@ -15,7 +15,6 @@ export default function Profile({
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
   const [addUserDetails, setAddUserDetails] = useState(false);
-  // const [isUserDetailsAdded, setIsUserDetailsAdded] = useState(false);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
@@ -24,6 +23,8 @@ export default function Profile({
   function handleRequiredUserDetails() {
     if (userData.contactno && userData.location) {
       setAddPostEnabled(true);
+    } else {
+      alert("Kindly add your contact no. and location.");
     }
   }
 
@@ -84,6 +85,7 @@ export default function Profile({
               />
             )}
           </Info>
+
           <PostList>
             <h4>Your Posts:</h4>
             {!userPostList.length ? (
@@ -105,9 +107,6 @@ export default function Profile({
           <StyledButton onClick={handleRequiredUserDetails}>
             Add Post
           </StyledButton>
-          {!userData.contactno && !userData.location && (
-            <Warning>Kindly fill Contact-no and Location</Warning>
-          )}
 
           {isEditEnabled && (
             <UpdatePost
@@ -181,11 +180,5 @@ const PostTitle = styled.div`
   padding: 5px;
   margin: 0 4px 0px 4px;
   width: 180px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-`;
-
-const Warning = styled.div`
-  color: red;
-  font-size: small;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

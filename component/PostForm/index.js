@@ -126,12 +126,6 @@ export default function PostForm({
         <input type="file" name="file" onChange={handleOnChange} required />
         <img src={imageSrc} width={180} height={150} />
 
-        {/* {imageSrc && !uploadData && (
-          <p>
-            <button>Upload Files</button>
-          </p>
-        )} */}
-
         <StyledLabel htmlFor="location">Location</StyledLabel>
         <StyledInput
           type="text"
@@ -145,7 +139,6 @@ export default function PostForm({
         <select name="shipping_type" id="shipping_type" required>
           <option value="">Select available service</option>
           <option value="homepickup">Home Pickup</option>
-
           <option value="doorstep">Door Step delivery</option>
         </select>
         <StyledLabel htmlFor="tag">Food Tag</StyledLabel>
@@ -184,4 +177,14 @@ const StyledHeading = styled.h2`
   color: var(--color-nemo);
 `;
 
-const BackButton = styled.button``;
+const BackButton = styled.button`
+  background-color: #f9e79f;
+  padding: 10px;
+  border-radius: 5%;
+  width: 150px;
+  border: 1px solid;
+  position: relative;
+  left: 5%;
+  transform: translateY(45px);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+`;

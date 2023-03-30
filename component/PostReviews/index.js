@@ -5,6 +5,7 @@ export default function PostReviews({ postId, setReviewsList }) {
   const { data: session } = useSession();
   const reviewerId = session.user.id;
 
+  //REnders Review Collection data
   async function handleReviewRender() {
     const data = await fetch("/api/reviews");
     const dataReponse = await data.json();

@@ -1,8 +1,8 @@
 import TitleBar from "../TitleBar";
-
 import styled from "styled-components";
 import { useSession, signOut, signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+
 export default function Layout({ children }) {
   const { data: session } = useSession();
   const router = useRouter();

@@ -52,7 +52,7 @@ const ImageWrapper = styled.div`
   border-radius: 50%;
 `;
 const PostWrapper = styled.li`
-  margin: 0 10px 0 10px;
+  margin: 0 40px 0 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -72,7 +72,10 @@ const HeartButton = styled.button`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
-const InfoWrapper = styled.div``;
+const InfoWrapper = styled.div`
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+`;
+
 const DetailsButton = styled.button`
   position: relative;
   top: 30px;

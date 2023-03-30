@@ -57,7 +57,7 @@ const AppGrid = styled.section`
   display: flex;
   flex-direction: column;
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 80px;
 `;
 const PostList = styled.ul`
   display: flex;
@@ -69,7 +69,7 @@ const Search = styled.input`
   width: 70%;
   height: 30px;
   border-radius: 2%;
-  padding: 10px;
+  padding: 15px;
   background-color: rgb(253, 254, 254);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

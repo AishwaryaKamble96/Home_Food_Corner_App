@@ -10,12 +10,12 @@ export default function login() {
       {session ? (
         <div>
           <Intro>Welcome, {session.user.name}</Intro>
-          <button onClick={() => signOut()}>Sign Out</button>
+          <StyledButton onClick={() => signOut()}>Sign Out</StyledButton>
         </div>
       ) : (
         <div>
           <Intro>Your are not signed in</Intro>
-          <button onClick={() => signIn()}>Sign In</button>
+          <StyledButton onClick={() => signIn()}>Sign In</StyledButton>
         </div>
       )}
     </LoginPage>
@@ -32,5 +32,14 @@ const Intro = styled.p`
   font-size: 20px;
   font-weight: bold;
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+`;
+
+const StyledButton = styled.button`
+  background-color: #f9e79f;
+  padding: 10px;
+  border-radius: 5%;
+  width: 100px;
+  border: 1px solid;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
