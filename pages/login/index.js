@@ -25,10 +25,12 @@ export default function login() {
 const LoginPage = styled.div`
   text-align: center;
   margin: 80px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const Intro = styled.p`
   font-size: 20px;
   font-weight: bold;
   color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
