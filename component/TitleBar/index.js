@@ -7,10 +7,9 @@ export default function TitleBar() {
 const Heading = styled.h1`
   color: red;
   display: flex;
-
   background-color: whitesmoke;
   justify-content: center;
-  margin: 10px;
+  margin: 0;
   padding: 20px;
   border-bottom: solid black;
 `;

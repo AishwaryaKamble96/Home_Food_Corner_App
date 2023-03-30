@@ -1,9 +1,11 @@
 import { useSession } from "next-auth/react";
+import styled from "styled-components";
 export default function PostReviews({ postId, setReviewsList }) {
+  const reviewDate = new Date().toISOString().substring(0, 10);
   const { data: session } = useSession();
-
   const reviewerId = session.user.id;
 
+  //REnders Review Collection data
   async function handleReviewRender() {
     const data = await fetch("/api/reviews");
     const dataReponse = await data.json();
@@ -18,6 +20,7 @@ export default function PostReviews({ postId, setReviewsList }) {
       review: reviewText,
       postId: postId,
       userId: reviewerId,
+      reviewDate: reviewDate,
     };
 
     const response = await fetch("/api/reviews/", {
@@ -39,7 +42,7 @@ export default function PostReviews({ postId, setReviewsList }) {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <StyledForm onSubmit={handleSubmit}>
         <label htmlFor="reviewText"></label>
         <input
           type="text"
@@ -49,8 +52,21 @@ export default function PostReviews({ postId, setReviewsList }) {
           size={50}
           required
         ></input>
-        <button>Add</button>
-      </form>
+        <AddButton>Add</AddButton>
+      </StyledForm>
     </>
   );
 }
+
+const StyledForm = styled.form`
+  display: flex;
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+  flex-direction: row;
+`;
+
+const AddButton = styled.button`
+  padding: 5px;
+  background-color: #f5ecdb;
+`;

@@ -87,7 +87,7 @@ export default function PostForm({
 
   return (
     <>
-      <button onClick={handleBackButton}>Back to Profile</button>
+      <BackButton onClick={handleBackButton}>Back to Profile</BackButton>
       <StyledHeading>Add New Post</StyledHeading>
       <StyledForm onSubmit={handleSubmit}>
         <StyledLabel htmlFor="name">Post Food Name</StyledLabel>
@@ -126,12 +126,6 @@ export default function PostForm({
         <input type="file" name="file" onChange={handleOnChange} required />
         <img src={imageSrc} width={180} height={150} />
 
-        {imageSrc && !uploadData && (
-          <p>
-            <button>Upload Files</button>
-          </p>
-        )}
-
         <StyledLabel htmlFor="location">Location</StyledLabel>
         <StyledInput
           type="text"
@@ -145,15 +139,14 @@ export default function PostForm({
         <select name="shipping_type" id="shipping_type" required>
           <option value="">Select available service</option>
           <option value="homepickup">Home Pickup</option>
-
           <option value="doorstep">Door Step delivery</option>
         </select>
         <StyledLabel htmlFor="tag">Food Tag</StyledLabel>
         <select name="tag" id="tag" required>
           <option value="">Select</option>
-          <option value="vegan">Vegan</option>
-          <option value="veg">Veg</option>
-          <option value="nonveg">Non-Veg</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Veg">Veg</option>
+          <option value="Nonveg">Non-Veg</option>
         </select>
 
         <StyledButton>Submit</StyledButton>
@@ -164,9 +157,11 @@ export default function PostForm({
 
 const StyledForm = styled.form`
   margin: 30px 30px 100px 30px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 5px;
+  backdrop-filter: blur(6px);
 `;
 const StyledLabel = styled.label`
   display: flex;
@@ -180,4 +175,16 @@ const StyledInput = styled.input`
 const StyledHeading = styled.h2`
   text-align: center;
   color: var(--color-nemo);
+`;
+
+const BackButton = styled.button`
+  background-color: #f9e79f;
+  padding: 10px;
+  border-radius: 5%;
+  width: 150px;
+  border: 1px solid;
+  position: relative;
+  left: 5%;
+  transform: translateY(45px);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

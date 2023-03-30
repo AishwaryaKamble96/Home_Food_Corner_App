@@ -15,7 +15,6 @@ export default function Profile({
   const [isEditEnabled, setIsEditEnabled] = useState(false);
   const [editablePostId, setEditablePostId] = useState();
   const [addUserDetails, setAddUserDetails] = useState(false);
-  const [isUserDetailsAdded, setIsUserDetailsAdded] = useState(false);
 
   const userPostList = postList.filter((post) => post.user_id === userId);
 
@@ -24,6 +23,8 @@ export default function Profile({
   function handleRequiredUserDetails() {
     if (userData.contactno && userData.location) {
       setAddPostEnabled(true);
+    } else {
+      alert("Kindly add your contact no. and location.");
     }
   }
 
@@ -72,7 +73,10 @@ export default function Profile({
             <dt>
               Location : <span>{userData.location}</span>
             </dt>
-            <button onClick={() => setAddUserDetails(true)}>Add Details</button>
+            <br />
+            <StyledInButton onClick={() => setAddUserDetails(true)}>
+              Add Details
+            </StyledInButton>
             {addUserDetails && (
               <UserDetailsForm
                 userData={userData}
@@ -81,6 +85,7 @@ export default function Profile({
               />
             )}
           </Info>
+
           <PostList>
             <h4>Your Posts:</h4>
             {!userPostList.length ? (
@@ -88,9 +93,13 @@ export default function Profile({
             ) : (
               userPostList.map((post) => (
                 <ListItem key={post._id}>
-                  {post.name}
-                  <button onClick={() => onDelete(post._id)}>Remove</button>
-                  <button onClick={() => handleUpdate(post._id)}>Update</button>
+                  <PostTitle> {post.name}</PostTitle>
+                  <StyledInButton onClick={() => onDelete(post._id)}>
+                    Remove
+                  </StyledInButton>
+                  <StyledInButton onClick={() => handleUpdate(post._id)}>
+                    Update
+                  </StyledInButton>
                 </ListItem>
               ))
             )}
@@ -98,9 +107,6 @@ export default function Profile({
           <StyledButton onClick={handleRequiredUserDetails}>
             Add Post
           </StyledButton>
-          {!userData.contactno && !userData.location && (
-            <Warning>Kindly fill Contact-no and Location</Warning>
-          )}
 
           {isEditEnabled && (
             <UpdatePost
@@ -116,6 +122,8 @@ export default function Profile({
 
 const ProfileTitle = styled.div`
   font-weight: bold;
+  font-size: larger;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const ProfileGrid = styled.section`
@@ -127,19 +135,28 @@ const ProfileGrid = styled.section`
 
 const Info = styled.div`
   margin: 10px 20px 30px 10px;
-  padding: 25px;
+  padding: 20px;
   background-color: white;
-  border-radius: 15%;
-  box-shadow: 5px 10px;
   border: 1px solid;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const StyledButton = styled.button`
-  background-color: white;
+  background-color: #f9e79f;
+  padding: 10px;
+  border-radius: 5%;
+  width: 100px;
+  border: 1px solid;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+`;
+
+const StyledInButton = styled.button`
+  background-color: #f5ecdb;
   padding: 5px;
   border-radius: 5%;
   width: 100px;
   border: 1px solid;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 
 const PostList = styled.ul`
@@ -147,6 +164,7 @@ const PostList = styled.ul`
   flex-direction: column;
   list-style: none;
   gap: 5px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;
 const ListItem = styled.li`
   padding: 5px;
@@ -154,12 +172,13 @@ const ListItem = styled.li`
   align-items: center;
   border: 1px solid;
   border-radius: 20px;
-  justify-content: space-evenly;
   display: flex;
-  gap: 5px;
+  justify-content: space-evenly;
 `;
 
-const Warning = styled.div`
-  color: red;
-  font-size: small;
+const PostTitle = styled.div`
+  padding: 5px;
+  margin: 0 4px 0px 4px;
+  width: 180px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 `;

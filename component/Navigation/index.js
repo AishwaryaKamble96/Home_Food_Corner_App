@@ -25,7 +25,7 @@ const LinkNavigation = styled.nav`
   width: 100%;
   display: flex;
   justify-content: space-evenly;
-  margin: 5px;
+  margin: 0;
   padding: 10px;
-  background-color: lightslategray;
+  background-color: #f2dc8a;
 `;

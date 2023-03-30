@@ -8,10 +8,10 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
-        margin:0;
-        font-family: sans-serif;
+      margin:auto;
+      font-family: sans-serif;
       background-color:whitesmoke;
-      background: url(/img/backgroundImg2.jpg) no-repeat center center fixed;
+      background: url(/img/backgroundImg.jpg) no-repeat center center fixed;
       background-size:cover;
     }
 `;
